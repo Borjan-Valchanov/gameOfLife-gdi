@@ -1,0 +1,16 @@
+D:\code\object-oriented\csharp\vsprojects\gameOfLife\bin\Debug\net5.0-windows\Game Of Life.exe
+D:\code\object-oriented\csharp\vsprojects\gameOfLife\bin\Debug\net5.0-windows\Game Of Life.deps.json
+D:\code\object-oriented\csharp\vsprojects\gameOfLife\bin\Debug\net5.0-windows\Game Of Life.runtimeconfig.json
+D:\code\object-oriented\csharp\vsprojects\gameOfLife\bin\Debug\net5.0-windows\Game Of Life.runtimeconfig.dev.json
+D:\code\object-oriented\csharp\vsprojects\gameOfLife\bin\Debug\net5.0-windows\Game Of Life.dll
+D:\code\object-oriented\csharp\vsprojects\gameOfLife\bin\Debug\net5.0-windows\ref\Game Of Life.dll
+D:\code\object-oriented\csharp\vsprojects\gameOfLife\bin\Debug\net5.0-windows\Game Of Life.pdb
+D:\code\object-oriented\csharp\vsprojects\gameOfLife\obj\Debug\net5.0-windows\gameOfLife.csproj.AssemblyReference.cache
+D:\code\object-oriented\csharp\vsprojects\gameOfLife\obj\Debug\net5.0-windows\gameOfLife.GeneratedMSBuildEditorConfig.editorconfig
+D:\code\object-oriented\csharp\vsprojects\gameOfLife\obj\Debug\net5.0-windows\gameOfLife.AssemblyInfoInputs.cache
+D:\code\object-oriented\csharp\vsprojects\gameOfLife\obj\Debug\net5.0-windows\gameOfLife.AssemblyInfo.cs
+D:\code\object-oriented\csharp\vsprojects\gameOfLife\obj\Debug\net5.0-windows\gameOfLife.csproj.CoreCompileInputs.cache
+D:\code\object-oriented\csharp\vsprojects\gameOfLife\obj\Debug\net5.0-windows\Game Of Life.dll
+D:\code\object-oriented\csharp\vsprojects\gameOfLife\obj\Debug\net5.0-windows\ref\Game Of Life.dll
+D:\code\object-oriented\csharp\vsprojects\gameOfLife\obj\Debug\net5.0-windows\Game Of Life.pdb
+D:\code\object-oriented\csharp\vsprojects\gameOfLife\obj\Debug\net5.0-windows\gameOfLife.genruntimeconfig.cache
