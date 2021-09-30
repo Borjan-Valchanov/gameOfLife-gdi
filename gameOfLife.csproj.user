@@ -4,5 +4,8 @@
     <Compile Update="GameOfLife.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="PicBoxWithInterpolation.cs">
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

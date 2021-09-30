@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,16 +17,22 @@ namespace gameOfLife {
 		int clientHeight = 600;
 
 		// Set the size of the cell rectangles here; this will affect the amount of cells
-		int cellSize = 15;
+		int cellSize = 10;
 
 		// Set the probability that a cell will be living when the random grid is first generated
-		double cellLivesProb = 0.3;
+		double cellLivesProb = 0.7;
 
 		// Create 2D array representing the grid of the game
 		bool[,] grid;
 
-		// Initialise graphics object for drawing on the form
-		Graphics graphics;
+		// Create picture box to hold the rendered image
+		private PicBoxWithInterpolation renderedGrid = new PicBoxWithInterpolation();
+
+		// Create a bitmap where the grid is drawn to
+		private Bitmap drawnGrid;
+
+		// Initialise graphics object for drawing the grid
+		private Graphics graphics;
 
 		// Constructor
 		public GameOfLife() {
@@ -38,8 +45,19 @@ namespace gameOfLife {
 			MaximumSize = Size;
 			MaximizeBox = false;
 
-			// Create graphics for the form
-			graphics = CreateGraphics();
+			// Adjust bitmap size
+			drawnGrid = new Bitmap(grid.GetLength(0), grid.GetLength(1));
+
+			// Link graphics to bitmap
+			graphics = Graphics.FromImage(drawnGrid);
+
+			// Make the picture box usable
+			renderedGrid.SizeMode = PictureBoxSizeMode.StretchImage;
+			renderedGrid.InterpolationMode = InterpolationMode.NearestNeighbor;
+			renderedGrid.Location = new Point(0, 0);
+			renderedGrid.Size = ClientSize;
+			renderedGrid.BackColor = Color.Black;
+			Controls.Add(renderedGrid);
 
 			// Set the background color to black, looks nicer
 			BackColor = Color.Black;
@@ -70,29 +88,37 @@ namespace gameOfLife {
 
 		// Game loop method
 		private void gameLoop() {
-			// Run draw and game update forever
-			while (true) {
-				draw();
-				gameUpdate();
-			}
+			// Create a timer that runs draw and game update every x ms
+			System.Timers.Timer timer = new System.Timers.Timer(100);
+			timer.Elapsed += (sender, eventArgs) => {
+				try {
+					draw();
+					gameUpdate();
+				} catch { }
+			};
+			timer.Start();
 		}
 
 		// Drawing method
 		private void draw() {
+			// CLear
+			graphics.Clear(Color.Transparent);
+
 			// Loop through all rows
 			for (int i = 0; i < grid.GetLength(0); i++) {
 
 				// Loop through all cells in that row
 				for (int j = 0; j < grid.GetLength(1); j++) {
-
-					// Draw a white square of set size with the coordinates being the position of the cell in the grid times the set size if that cell holds true as value, if not, clear that cell
+					
+					// Draw a white square of set size with the coordinates being the position of the cell in the grid times the set size if that cell holds true as value
 					if(grid[i, j]) {
-						graphics.FillRectangle(Brushes.White, i * cellSize, j * cellSize, cellSize, cellSize);
-					} else {
-						graphics.FillRectangle(Brushes.Black, i * cellSize, j * cellSize, cellSize, cellSize);
+						graphics.FillRectangle(Brushes.White, i, j, 1, 1);
 					}
 				}
 			}
+
+			// Apply the image
+			renderedGrid.Image = (Bitmap)drawnGrid.Clone();
 		}
 
 		// Game update method
