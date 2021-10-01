@@ -20,7 +20,7 @@ namespace gameOfLife {
 		int cellSize = 10;
 
 		// Set the probability that a cell will be living when the random grid is first generated
-		double cellLivesProb = 0.7;
+		double cellLivesProb = 0.3;
 
 		// Create 2D array representing the grid of the game
 		bool[,] grid;
@@ -39,11 +39,8 @@ namespace gameOfLife {
 			// Create the grid with specified values
 			grid = new bool[clientWidth / cellSize, clientHeight / cellSize];
 
-			// Set and fix the size
+			// Set the size
 			ClientSize = new Size(clientWidth, clientHeight);
-			MinimumSize = Size;
-			MaximumSize = Size;
-			MaximizeBox = false;
 
 			// Adjust bitmap size
 			drawnGrid = new Bitmap(grid.GetLength(0), grid.GetLength(1));
@@ -52,7 +49,7 @@ namespace gameOfLife {
 			graphics = Graphics.FromImage(drawnGrid);
 
 			// Make the picture box usable
-			renderedGrid.SizeMode = PictureBoxSizeMode.StretchImage;
+			renderedGrid.SizeMode = PictureBoxSizeMode.Zoom;
 			renderedGrid.InterpolationMode = InterpolationMode.NearestNeighbor;
 			renderedGrid.Location = new Point(0, 0);
 			renderedGrid.Size = ClientSize;
@@ -64,6 +61,9 @@ namespace gameOfLife {
 
 			// Call method to randomise grid's content
 			randomiseGrid();
+
+			// Link resize of the picture box to form resize
+			Resize += (sender, eventArgs) => renderedGrid.Size = ClientSize;
 
 			// Prepare game loop to run when the form is displayed
 			Shown += (sender, eventArgs) => gameLoop();
