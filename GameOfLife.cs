@@ -1,38 +1,33 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Windows.Forms;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Xml;
 
 namespace gameOfLife {
 	class GameOfLife : Form {
 		// Set the width of the client area here
-		int clientWidth = 800;
+		private readonly int clientWidth = 800;
 
 		// Set the height of the client area here
-		int clientHeight = 600;
+		private readonly int clientHeight = 600;
 
 		// Set the size of the cell rectangles here; this will affect the amount of cells
-		int cellSize = 10;
+		private readonly int cellSize = 10;
 
 		// Set the probability that a cell will be living when the random grid is first generated
-		double cellLivesProb = 0.3;
-
-		// Create 2D array representing the grid of the game
-		bool[,] grid;
+		private readonly double cellLivesProb = 0.4;
 
 		// Create picture box to hold the rendered image
-		private PicBoxWithInterpolation renderedGrid = new PicBoxWithInterpolation();
+		private readonly PicBoxWithInterpolation renderedGrid = new();
 
 		// Create a bitmap where the grid is drawn to
-		private Bitmap drawnGrid;
+		private readonly Bitmap drawnGrid;
 
 		// Initialise graphics object for drawing the grid
-		private Graphics graphics;
+		private readonly Graphics graphics;
+
+		// Create 2D array representing the grid of the game
+		private bool[,] grid;
 
 		// Constructor
 		public GameOfLife() {
@@ -60,19 +55,19 @@ namespace gameOfLife {
 			BackColor = Color.Black;
 
 			// Call method to randomise grid's content
-			randomiseGrid();
+			RandomiseGrid();
 
 			// Link resize of the picture box to form resize
 			Resize += (sender, eventArgs) => renderedGrid.Size = ClientSize;
 
 			// Prepare game loop to run when the form is displayed
-			Shown += (sender, eventArgs) => gameLoop();
+			Shown += (sender, eventArgs) => GameLoop();
 		}
 
 		// Method to randomise grid's content
-		private void randomiseGrid() {
+		private void RandomiseGrid() {
 			// Create an object to generate random numbers
-			Random random = new Random();
+			Random random = new();
 
 			// Loop through all rows
 			for (int i = 0; i < grid.GetLength(0); i++) {
@@ -87,20 +82,20 @@ namespace gameOfLife {
 		}
 
 		// Game loop method
-		private void gameLoop() {
+		private void GameLoop() {
 			// Create a timer that runs draw and game update every x ms
-			System.Timers.Timer timer = new System.Timers.Timer(100);
+			System.Timers.Timer timer = new(100);
 			timer.Elapsed += (sender, eventArgs) => {
 				try {
-					draw();
-					gameUpdate();
+					Draw();
+					GameUpdate();
 				} catch { }
 			};
 			timer.Start();
 		}
 
 		// Drawing method
-		private void draw() {
+		private void Draw() {
 			// CLear
 			graphics.Clear(Color.Transparent);
 
@@ -122,7 +117,7 @@ namespace gameOfLife {
 		}
 
 		// Game update method
-		private void gameUpdate() {
+		private void GameUpdate() {
 			// Initialise a new grid which the new values will temporarily be written to
 			bool[,] newGrid = new bool[grid.GetLength(0), grid.GetLength(1)];
 
@@ -145,7 +140,7 @@ namespace gameOfLife {
 							if (!((k == 0) && (l == 0))) {
 
 								// Introduce variables for the neighbours coordinates, this is needed to wrap the game around it's edges
-								int nRow = 0;
+								int nRow;
 								if (i == 0 && k < 0) {
 									nRow = grid.GetLength(0) + k;
 								} else if (i == grid.GetLength(0) - 1 && k > 0) {
@@ -153,7 +148,7 @@ namespace gameOfLife {
 								} else {
 									nRow = i + k;
 								}
-								int nCol = 0;
+								int nCol;
 								if (j == 0 && l < 0) {
 									nCol = grid.GetLength(1) + l;
 								} else if (j == grid.GetLength(1) - 1 && l > 0) {
@@ -184,9 +179,8 @@ namespace gameOfLife {
 				}
 			}
 
-			// Finally, overwrite the old grid with the new one and dispose newGrid
+			// Finally, overwrite the old grid with the new one
 			grid = newGrid;
-			newGrid = null;
 		}
 	}
 }
